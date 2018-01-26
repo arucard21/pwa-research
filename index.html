@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"/>
+<link rel="manifest" href="manifest.json">
+
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="application-name" content="TestPWA">
+<meta name="apple-mobile-web-app-title" content="TestPWA">
+<meta name="theme-color" content="#008000">
+<meta name="msapplication-navbutton-color" content="#008000">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="msapplication-starturl" content="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link rel="icon" type="image/png" sizes="512x512" href="appicon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="512x512" href="appicon.png">
+
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js')
+  .then(function(reg) {
+    // registration worked
+    console.log('Registration succeeded. Scope is ' + reg.scope);
+  }).catch(function(error) {
+    // registration failed
+    console.log('Registration failed with ' + error);
+  });
+}
+</script>
+
+<title>Test PWA</title>
+
+</head>
+<body>
+
+<h1>PWA Test</h1>
+<p>This is a test to try out PWA</p>
+
+</body>
+</html> 

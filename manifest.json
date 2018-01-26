@@ -1,0 +1,16 @@
+{
+  "name": "Test PWA App",
+  "short_name": "TestPWA",
+  "lang": "en-US",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#008000",
+  "background_color": "#008000",
+  "icons": [
+    {
+      "src": "appicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
