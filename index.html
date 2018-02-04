@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="utf-8"/>
 <link rel="manifest" href="manifest.json">
 <meta name="description" content="A simple PWA that doesn't really do much, for research into how to create one">
 <meta name="mobile-web-app-capable" content="yes">
@@ -18,18 +19,93 @@
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js')
   .then(function(reg) {
-    // registration worked
-    console.log('Registration succeeded. Scope is ' + reg.scope);
+	// registration succeeded
   }).catch(function(error) {
     // registration failed
     console.log('Registration failed with ' + error);
   });
 }
 </script>
-<title>Test PWA</title>
+<style>
+*
+{
+	font-style: normal;
+	font-size: 24px;
+}
+
+table
+{
+	width: 100%;
+	max-width: 400px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.status
+{
+	height: 30px;
+	width: 30px;
+	text-align: center;
+}
+
+.up
+{
+	color: #008000;
+}
+
+.down
+{
+	color: #FF0000;
+}
+
+.up, .down
+{
+	display: none;
+}
+</style>
+<title>Arucard Status</title>
 </head>
-<body>
-<h1>PWA Test</h1>
-<p>This is a test to try out PWA</p>
+<body onload="checkAvailability()">
+<main>
+	<table style="width:100%">
+		<tr>
+			<th colspan="2">Availability</th>
+		</tr>
+		<tr id="github">
+			<td class="name">
+				<a href="https://github.com/arucard21/">arucard21 GitHub/</a>
+			</td>
+			<td class="status">
+				<img alt="Checking status" class="loading" src="spinning-circles.svg" />
+				<div class="down">&#10060;</div>
+				<div class="up">&#10003;</div>
+			</td>
+		</tr>
+	</table>
+</main>
+<script>
+function checkAvailability(){
+	isUp('github');
+}
+function isUp(row) {
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4) {
+			document.querySelectorAll('#'+row+' > .status > .loading')[0].style.display = 'none';
+			if (this.status == 200){
+				document.querySelectorAll('#'+row+' > .status > .up')[0].style.display = 'inline';
+				document.querySelectorAll('#'+row+' > .status > .down')[0].style.display = 'none';
+			}
+			else{
+				document.querySelectorAll('#'+row+' > .status > .up')[0].style.display = 'none';
+				document.querySelectorAll('#'+row+' > .status > .down')[0].style.display = 'inline'; 
+			}
+		}
+	};
+	xhttp.open("HEAD", document.querySelectorAll('#'+row+' > .name > a')[0].getAttribute('href'), true);
+	xhttp.setRequestHeader('Cache-Control', 'no-cache');
+	xhttp.send();
+}
+</script>
 </body>
 </html> 

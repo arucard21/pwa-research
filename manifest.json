@@ -1,6 +1,6 @@
 {
-  "name": "Test PWA App",
-  "short_name": "TestPWA",
+  "name": "Arucard Status",
+  "short_name": "Arucard",
   "lang": "en-US",
   "start_url": "index.html",
   "display": "standalone",

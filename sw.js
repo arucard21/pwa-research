@@ -1,10 +1,9 @@
-// this can be used to cache content that would be used in index.html
 self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open('v1').then(function(cache) {
       return cache.addAll([
-        '',
-		'index.html'
+		'index.html',
+		'spinning-circles.svg'
       ]);
     })
   );
@@ -12,15 +11,13 @@ self.addEventListener('install', function(event) {
 
 self.addEventListener('fetch', function(event) {
   event.respondWith(
-    caches.match(event.request).then(function(resp) {
-      return resp || fetch(event.request).then(function(response) {
-        caches.open('v1').then(function(cache) {
-		  cache.put(event.request, response.clone());
-		});
-		return response;
-		});
+    caches.match(event.request).then(function(cachedResponse) {
+	  if(cachedResponse != undefined){
+		return cachedResponse.clone();
+	  }
+	  return fetch(event.request);
     }).catch(function() {
-	  return new Response('This is the fallback page');
+	  return new Response('', {'status': '500', 'statusText': 'The non-cached request could not be executed'});
     })
   );
 });
